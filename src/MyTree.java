@@ -67,6 +67,13 @@ public class MyTree<T>{
 			addToTree(current.right, elem);
 		}
 	}
+	/**
+	 * testRemove()
+	 */
+	public void removeTest(MyTreeNode<T> node){
+		
+		node.left.right = null;
+	}
 	
 	/**
 	 * removeFromTree()
@@ -76,25 +83,20 @@ public class MyTree<T>{
 	public void removeLeafFromTree(T elem, MyTreeNode<T> node){
 		
 		assert (elem != null && node != null);
-		
-		//---------------------------------------
-		// If the root is the note to be deleted
-		//---------------------------------------
-		if (node.compareTo(elem) == 0){
-			node = null;
-		} else {
 			
 			//-------------------------------
 			// Check left subtree parents. 
 			//-------------------------------
 			if (node.left != null && node.left.compareTo(elem) == 0){
 				node.left = null;
-			} else if (node.left != null && node.left.compareTo(elem) < 0){
+			} 
+			
+			//there is a left child
+			if (node.left != null){
 				
-				// elem is greater than node.left so go to left child's right node
-				if (node.left.right != null){
-					removeLeafFromTree(elem, node.left.right);
-				}		
+				if (node.compareTo(elem) > 0){
+					removeLeafFromTree(elem, node.left);
+				}	
 			}
 			
 			//-----------------------------
@@ -102,10 +104,15 @@ public class MyTree<T>{
 			//-----------------------------
 			if (node.right != null && node.right.compareTo(elem) == 0){
 				node.right = null;
-			} else if (node.right != null && node.right.compareTo(elem) < 0){
-				removeLeafFromTree(elem, node.right);
+			} 
+			
+			if (node.right != null){
+				
+				if (node.compareTo(elem) < 0){
+					removeLeafFromTree(elem, node.right);
+				}
 			}
-		}
+
 		
 		// Case the delete Node has one child
 		
@@ -113,7 +120,7 @@ public class MyTree<T>{
 	}
 	
 	/**
-	 * getTreeLevels() 
+	 * getTreeLevels
 	 * 
 	 */
 	public int getTreeLevels(MyTreeNode<T> node){
@@ -315,6 +322,7 @@ public class MyTree<T>{
 		// Test removeFromTree
 		//------------------------
 		animeTree.removeLeafFromTree(anime5, animeTree.root);
+		//animeTree.removeTest(animeTree.root);
 		
 		foundNode = animeTree.depthFirstSearch(anime5, animeTree.root);
 		if (foundNode != null){
