@@ -63,7 +63,6 @@ public class MyTree<T>{
 			addToTree(current.right, elem);
 		}
 	}
-<<<<<<< HEAD
 	
 	/**
 	 * isLeaf - determines if the given node is a lead node
@@ -73,14 +72,10 @@ public class MyTree<T>{
 	public boolean isLeaf(MyTreeNode<T> n){
 		
 		if (n.left == null && n.right == null){
-			System.out.println(n.toString() + " is a leaf node so it will be removed.");
 			return true;
 		}
-		System.out.println(n.toString() + " is not a leaf so it will not be removed.");
 		return false;
 	}
-=======
->>>>>>> 6b4e412a4e8a0c66231424d99cd6c5c8ab16d333
 	
 	/**
 	 * removeFromTree()
