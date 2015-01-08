@@ -63,6 +63,7 @@ public class MyTree<T>{
 			addToTree(current.right, elem);
 		}
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * isLeaf - determines if the given node is a lead node
@@ -78,6 +79,8 @@ public class MyTree<T>{
 		System.out.println(n.toString() + " is not a leaf so it will not be removed.");
 		return false;
 	}
+=======
+>>>>>>> 6b4e412a4e8a0c66231424d99cd6c5c8ab16d333
 	
 	/**
 	 * removeFromTree()
@@ -127,7 +130,10 @@ public class MyTree<T>{
 		// Case the delete Node has two children
 	}
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 6b4e412a4e8a0c66231424d99cd6c5c8ab16d333
 	/**
 	* breadthFirstSearch() searches the tree by level
 	* the underlying queue is a linked list.
@@ -165,7 +171,7 @@ public class MyTree<T>{
 	}
 	
 	/**
-	 * depthFirsSearch()
+	 * depthFirsSearch
 	 * @param node
 	 * @param current
 	 * @return current node
@@ -322,7 +328,11 @@ public class MyTree<T>{
 		//------------------------
 		// Test removeFromTree
 		//------------------------
+<<<<<<< HEAD
 		animeTree.removeNode(anime5, animeTree.root); //remove FMA
+=======
+		animeTree.removeLeafFromTree(anime5, animeTree.root);
+>>>>>>> 6b4e412a4e8a0c66231424d99cd6c5c8ab16d333
 		
 		animeTree.removeNode(anime7, animeTree.root); //try to remove Another, which would also remove AoT
 		
