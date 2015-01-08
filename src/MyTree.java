@@ -11,10 +11,6 @@ public class MyTree<T>{
 	
 	
 	protected MyTreeNode<T> root;
-	protected static int rightLevels = 0;
-	protected static int leftLevels = 0;
-	protected static int items = 0;
-	protected static int treeLevels = 0;
 	
 	/**
 	 * Creates tree with empty root
@@ -67,13 +63,6 @@ public class MyTree<T>{
 			addToTree(current.right, elem);
 		}
 	}
-	/**
-	 * testRemove()
-	 */
-	public void removeTest(MyTreeNode<T> node){
-		
-		node.left.right = null;
-	}
 	
 	/**
 	 * removeFromTree()
@@ -120,18 +109,6 @@ public class MyTree<T>{
 	}
 	
 	/**
-	 * getTreeLevels
-	 * 
-	 */
-	public int getTreeLevels(MyTreeNode<T> node){
-		
-		if (node.left != null || node.right != null){
-			treeLevels++;
-		}
-		return treeLevels;
-	}
-	
-	/**
 	* breadthFirstSearch() searches the tree by level
 	* the underlying queue is a linked list.
 	* 
@@ -168,7 +145,7 @@ public class MyTree<T>{
 	}
 	
 	/**
-	 * depthFirsSearch()
+	 * depthFirsSearch
 	 * @param node
 	 * @param current
 	 * @return current node
@@ -322,7 +299,6 @@ public class MyTree<T>{
 		// Test removeFromTree
 		//------------------------
 		animeTree.removeLeafFromTree(anime5, animeTree.root);
-		//animeTree.removeTest(animeTree.root);
 		
 		foundNode = animeTree.depthFirstSearch(anime5, animeTree.root);
 		if (foundNode != null){
