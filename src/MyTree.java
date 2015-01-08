@@ -11,10 +11,6 @@ public class MyTree<T>{
 	
 	
 	protected MyTreeNode<T> root;
-	protected static int rightLevels = 0;
-	protected static int leftLevels = 0;
-	protected static int items = 0;
-	protected static int treeLevels = 0;
 	
 	/**
 	 * Creates tree with empty root
@@ -67,12 +63,20 @@ public class MyTree<T>{
 			addToTree(current.right, elem);
 		}
 	}
+	
 	/**
-	 * testRemove()
+	 * isLeaf - determines if the given node is a lead node
+	 * @param n
+	 * @return
 	 */
-	public void removeTest(MyTreeNode<T> node){
+	public boolean isLeaf(MyTreeNode<T> n){
 		
-		node.left.right = null;
+		if (n.left == null && n.right == null){
+			System.out.println(n.toString() + " is a leaf node so it will be removed.");
+			return true;
+		}
+		System.out.println(n.toString() + " is not a leaf so it will not be removed.");
+		return false;
 	}
 	
 	/**
@@ -80,7 +84,7 @@ public class MyTree<T>{
 	 * @param T elem
 	 * @param MyTreeNode<T> node
 	 */
-	public void removeLeafFromTree(T elem, MyTreeNode<T> node){
+	public void removeNode(T elem, MyTreeNode<T> node){
 		
 		assert (elem != null && node != null);
 			
@@ -88,14 +92,17 @@ public class MyTree<T>{
 			// Check left subtree parents. 
 			//-------------------------------
 			if (node.left != null && node.left.compareTo(elem) == 0){
-				node.left = null;
+				//just delete it if it's a leaf
+				if (isLeaf(node.left)){
+					node.left = null;
+				}
 			} 
 			
 			//there is a left child
 			if (node.left != null){
 				
 				if (node.compareTo(elem) > 0){
-					removeLeafFromTree(elem, node.left);
+					removeNode(elem, node.left);
 				}	
 			}
 			
@@ -103,33 +110,23 @@ public class MyTree<T>{
 			//Check right subtree parents.
 			//-----------------------------
 			if (node.right != null && node.right.compareTo(elem) == 0){
-				node.right = null;
+				if (isLeaf(node.right)){
+					node.right = null;
+				}
 			} 
 			
 			if (node.right != null){
 				
 				if (node.compareTo(elem) < 0){
-					removeLeafFromTree(elem, node.right);
+					removeNode(elem, node.right);
 				}
 			}
-
 		
 		// Case the delete Node has one child
 		
 		// Case the delete Node has two children
 	}
 	
-	/**
-	 * getTreeLevels
-	 * 
-	 */
-	public int getTreeLevels(MyTreeNode<T> node){
-		
-		if (node.left != null || node.right != null){
-			treeLevels++;
-		}
-		return treeLevels;
-	}
 	
 	/**
 	* breadthFirstSearch() searches the tree by level
@@ -317,21 +314,24 @@ public class MyTree<T>{
 		} else {
 			System.out.println("The show " + anime10.toString() + " is NOT in the tree.");
 		}
+		System.out.println();
+		System.out.println("current animeTree contains:");
+		System.out.println(animeTree.printTreeDepthFirst(animeTree.root) + "\n\n");
+		System.out.println();
 		
 		//------------------------
 		// Test removeFromTree
 		//------------------------
-		animeTree.removeLeafFromTree(anime5, animeTree.root);
-		//animeTree.removeTest(animeTree.root);
+		animeTree.removeNode(anime5, animeTree.root); //remove FMA
 		
-		foundNode = animeTree.depthFirstSearch(anime5, animeTree.root);
-		if (foundNode != null){
-			System.out.println("The show " + foundNode.toString() + " is in the tree. BUT IT SHOULD NO LONGER BE IN THE TREE BECAUSE IT WAS SUPPOSED TO BE DELETED *cries*.");
-		} else {
-			System.out.println("The show " + anime5.toString() + " is not in the tree.");
-		}
+		animeTree.removeNode(anime7, animeTree.root); //try to remove Another, which would also remove AoT
+		
+		animeTree.removeNode(anime4, animeTree.root); //try to remove Death Note
+		
+		animeTree.removeNode(anime8, animeTree.root); //remove Yu Yu Hakusho
 		
 		//animeTree.breadthFirstSearch(animeTree.root);
+		System.out.println("current animeTree contains:");
 		System.out.println(animeTree.printTreeDepthFirst(animeTree.root) + "\n\n");
 	}
 }
