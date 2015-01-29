@@ -33,9 +33,9 @@ public class MyTree<T>{
 	 */
 	public void addToTree(MyTreeNode<T> node, T elem){
 		
-		//----------------------------
-		//ensure that root is not null
-		//----------------------------
+		/**
+		 * Ensure the root is not null
+		 */
 		assert(root != null);
 		
 		MyTreeNode<T> current = node;
@@ -43,9 +43,9 @@ public class MyTree<T>{
 		MyTreeNode<T> newNode = new MyTreeNode<T>(); //make a new node for the elem
 		newNode.data = elem; //put the data into the newNode
 		
-		//---------------------------------
-		//if this tree only has a root node
-		//---------------------------------
+		/**
+		 * If this tree only has a root node
+		 */
 		if (current.left == null && current.compareTo(elem) > 0){
 				current.left = newNode;
 		}
@@ -89,12 +89,14 @@ public class MyTree<T>{
 		
 		assert (elem != null && node != null);
 			
-			//-------------------------------
-			// Check left subtree parents. 
-			//-------------------------------
+			/**
+			 * Check left subtree parents
+			 */
 			if (node.left != null && node.left.compareTo(elem) == 0){
 				
-				//just delete it if it's a leaf
+				/**
+				 * Just delete it if it's a leaf
+				 */
 				if (isLeaf(node.left)){
 					node.left = null;
 				} else {
@@ -111,25 +113,24 @@ public class MyTree<T>{
 				}
 			} 
 			
-			//there is a left child
+			/**
+			 * There is a left child.
+			 */
 			if (node.left != null){
 				
 				if (node.compareTo(elem) > 0){
 					removeNode(elem, node.left);
 				}	
 			}
-			
-			//-----------------------------
-			//Check right subtree parents.
-			//-----------------------------
+			/**
+			 * Check right subtree parents.
+			 */
 			if (node.right != null && node.right.compareTo(elem) == 0){
 				if (isLeaf(node.right)){
 					//just delete if it's a leaf.
 					node.right = null;
 				} else {
-					//does it have only 1 child?
-					
-					//does it have 2 children?
+					//run removeThis
 				}
 			} 
 			
@@ -145,7 +146,7 @@ public class MyTree<T>{
 	 * removeParentNode()
 	 * @param T elem
 	 */
-	public void removeThis(T elem){
+	public void removeThisParent(T elem){
 		
 		// do depth search for the node containing elem
 		// if it is found, check if it's a leaf, if not
@@ -153,15 +154,22 @@ public class MyTree<T>{
 		MyTreeNode<T> delete = depthFirstSearch(elem, root);
 		System.out.println("Found the delete node : " + delete.toString());
 		
-		if (delete.left != null){
-			System.out.println("delete node has a left child.");
+		/**
+		 * Node has exactly one child
+		 */
+		if (delete.left != null && delete.right == null  || delete.left == null && delete.right != null){
+			System.out.println("delete node has one child.");
 		}
 		
-		if (delete.right != null){
-			System.out.println("delete node has a right child.");
+		/**
+		 * Node has 2 children
+		 */
+		if (delete.left != null && delete.right != null){
+			System.out.println("delete node has 2 children.");
 		}
 		delete.left = null;
 		delete.right = null;
+		delete.data = null;
 	}
 	
 	/**
@@ -179,22 +187,22 @@ public class MyTree<T>{
 		while (q.size() != 0){
 			
 			if (parent.left != null){
-				//----------------------------
-				//add left child to the queue
-				//----------------------------
+				/**
+				 * Add left child to queue
+				 */
 				q.add(parent.left);
 			}
 			
 			if (parent.right != null){
-				//----------------------------
-				//add right child to the queue
-				//----------------------------
+				/**
+				 * Add right child to queue
+				 */
 				q.add(parent.right);
 			}
 			
-			//--------------------------
-			//dequeue the current parent
-			//--------------------------
+			/**
+			 * Dequeue the current parent
+			 */
 			q.remove();
 			parent = q.peek();
 		}
@@ -212,23 +220,23 @@ public class MyTree<T>{
 			return null;
 		}
 		
-		//-----------------------------------------
-		// If the node we want is the current root
-		//-----------------------------------------
+		/**
+		 * If the node we want is the current root
+		 */
 		if (current.compareTo(datum) == 0){
 			return current;
 		} else {
 			
-			//-----------------------------------------------------------------
-			// If datum is less than the current node, search the left subtree
-			//-----------------------------------------------------------------
+			/**
+			 * If datum is less than the current node, search the left subtree
+			 */
 			if (current.left != null && current.compareTo(datum) > 0){
 				return depthFirstSearch(datum, current.left);
 			}
 			
-			//-----------------------------------------------------------------
-			// If datum is grater than the current node, search the right subtree
-			//-----------------------------------------------------------------
+			/**
+			 * If datum is greater than the current node, search the right subtree
+			 */
 			if (current.right != null && current.compareTo(datum) < 0){
 				return depthFirstSearch(datum, current.right);
 			}
@@ -260,9 +268,17 @@ public class MyTree<T>{
 				q.add(current.right);
 			}
 			
-			//---------------------
-			// Dequeue current node
-			//---------------------
+			/**
+			 * Add anime to the string
+			 */
+			if (current.data != null){
+				str.append(q.peek());
+				str.append("\t");
+			}
+			
+			/**
+			 * Dequeue current node
+			 */
 			q.remove();
 			current = q.peek();
 		}
@@ -277,7 +293,7 @@ public class MyTree<T>{
 	 */
 	public StringBuilder printTreeDepthFirst(MyTreeNode<T> node){
 		
-		if(node == null)
+		if(node == null || node.data == null)
 			return new StringBuilder("");
 		
 		StringBuilder str = new StringBuilder();
@@ -305,6 +321,7 @@ public class MyTree<T>{
 		Anime anime7 = new Anime("Another", "Mystery/ Horror");
 		Anime anime8 = new Anime("Yu Yu Hakusho", "Action");
 		Anime anime9 = new Anime("Attack on Titan", "Dark Fantasy");
+		Anime anime10 = new Anime("Yona", "Adventure");
 		
 		MyTree<Anime> animeTree = new MyTree<Anime>();
 		animeTree.root.data = anime3;
@@ -317,10 +334,11 @@ public class MyTree<T>{
 		animeTree.addToTree(animeTree.root, anime7);
 		animeTree.addToTree(animeTree.root, anime8);
 		animeTree.addToTree(animeTree.root, anime9);
+		animeTree.addToTree(animeTree.root, anime10);
 		
-		//------------------------
-		// Test depthFirstSearch
-		//------------------------
+		/**
+		 * Test depthfirst search
+		 */
 		MyTreeNode<Anime> foundNode = animeTree.depthFirstSearch(anime5, animeTree.root);
 		if (foundNode != null){
 			System.out.println("The show " + foundNode.toString() + " is in the tree.");
@@ -342,22 +360,22 @@ public class MyTree<T>{
 			System.out.println("The show " + anime6.toString() + " is not in the tree");
 		}
 		
-		Anime anime10 = new Anime("Aldnoah Zero", "Futuristic, Meccha");
+		Anime anime11 = new Anime("Aldnoah Zero", "Futuristic, Meccha");
 		
-		foundNode = animeTree.depthFirstSearch(anime10, animeTree.root);
+		foundNode = animeTree.depthFirstSearch(anime11, animeTree.root);
 		if (foundNode != null){
 			System.out.println("The show " + foundNode.toString() + " is in the tree.");
 		} else {
-			System.out.println("The show " + anime10.toString() + " is NOT in the tree.");
+			System.out.println("The show " + anime11.toString() + " is NOT in the tree.");
 		}
 		System.out.println();
 		System.out.println("current animeTree contains:");
 		System.out.println(animeTree.printTreeDepthFirst(animeTree.root) + "\n\n");
 		System.out.println();
 		
-		//------------------------
-		// Test removeFromTree
-		//------------------------
+		/**
+		 * Test removeNode()
+		 */
 		/**animeTree.removeNode(anime5, animeTree.root); //remove FMA
 		animeTree.removeNode(anime7, animeTree.root); //try to remove Another, which would also remove AoT
 		animeTree.removeNode(anime4, animeTree.root); //try to remove Death Note, should not work for now
@@ -367,12 +385,17 @@ public class MyTree<T>{
 		System.out.println("current animeTree contains:");
 		System.out.println(animeTree.printTreeDepthFirst(animeTree.root) + "\n\n");*/
 		
-		//-----------------
-		//Test removeThis
-		//-----------------
-		animeTree.removeThis(anime4); //try to delete Death Note
+		/**
+		 * Test removeThisParent()
+		 */
+		animeTree.removeThisParent(anime4); //try to delete Death Note
+		animeTree.removeThisParent(anime8);
 		System.out.println("current animeTree contains:");
 		System.out.println(animeTree.printTreeDepthFirst(animeTree.root) + "\n\n");
+		
+		System.out.println("BreadthFirst representation of tree:");
+		System.out.println(animeTree.printTreeBreadthFirst(animeTree.root) + "\n\n");
+		
 		
 	}
 }
