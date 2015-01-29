@@ -78,7 +78,10 @@ public class MyTree<T>{
 	}
 	
 	/**
-	 * removeFromTree()
+	 * removeNode() - we need this method because breadthfirst and depthfirst searches
+	 *  can't help us delete the current node since we can't delete the node we're currently
+	 *  visiting (bc parent will keep the ref). We can only delete the children of the current node.
+	 *  
 	 * @param T elem
 	 * @param MyTreeNode<T> node
 	 */
@@ -90,9 +93,21 @@ public class MyTree<T>{
 			// Check left subtree parents. 
 			//-------------------------------
 			if (node.left != null && node.left.compareTo(elem) == 0){
+				
 				//just delete it if it's a leaf
 				if (isLeaf(node.left)){
 					node.left = null;
+				} else {
+					
+					//does it have 1 child?
+					if (node.right == null){
+						
+					}
+					
+					//does it have 2 children?
+					if (node.right != null){
+						
+					}
 				}
 			} 
 			
@@ -109,7 +124,12 @@ public class MyTree<T>{
 			//-----------------------------
 			if (node.right != null && node.right.compareTo(elem) == 0){
 				if (isLeaf(node.right)){
+					//just delete if it's a leaf.
 					node.right = null;
+				} else {
+					//does it have only 1 child?
+					
+					//does it have 2 children?
 				}
 			} 
 			
@@ -119,10 +139,29 @@ public class MyTree<T>{
 					removeNode(elem, node.right);
 				}
 			}
+	}
+	
+	/**
+	 * removeParentNode()
+	 * @param T elem
+	 */
+	public void removeThis(T elem){
 		
-		// Case the delete Node has one child
+		// do depth search for the node containing elem
+		// if it is found, check if it's a leaf, if not
+		// continue with the removal algorithm. 
+		MyTreeNode<T> delete = depthFirstSearch(elem, root);
+		System.out.println("Found the delete node : " + delete.toString());
 		
-		// Case the delete Node has two children
+		if (delete.left != null){
+			System.out.println("delete node has a left child.");
+		}
+		
+		if (delete.right != null){
+			System.out.println("delete node has a right child.");
+		}
+		delete.left = null;
+		delete.right = null;
 	}
 	
 	/**
@@ -319,17 +358,21 @@ public class MyTree<T>{
 		//------------------------
 		// Test removeFromTree
 		//------------------------
-
-		animeTree.removeNode(anime5, animeTree.root); //remove FMA
-		
+		/**animeTree.removeNode(anime5, animeTree.root); //remove FMA
 		animeTree.removeNode(anime7, animeTree.root); //try to remove Another, which would also remove AoT
-		
-		animeTree.removeNode(anime4, animeTree.root); //try to remove Death Note
-		
-		animeTree.removeNode(anime8, animeTree.root); //remove Yu Yu Hakusho
-		
+		animeTree.removeNode(anime4, animeTree.root); //try to remove Death Note, should not work for now
+		animeTree.removeNode(anime8, animeTree.root); //remove Yu Yu Hakusho 
+				
 		//animeTree.breadthFirstSearch(animeTree.root);
 		System.out.println("current animeTree contains:");
+		System.out.println(animeTree.printTreeDepthFirst(animeTree.root) + "\n\n");*/
+		
+		//-----------------
+		//Test removeThis
+		//-----------------
+		animeTree.removeThis(anime4); //try to delete Death Note
+		System.out.println("current animeTree contains:");
 		System.out.println(animeTree.printTreeDepthFirst(animeTree.root) + "\n\n");
+		
 	}
 }
